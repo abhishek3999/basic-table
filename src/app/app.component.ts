@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import * as bootstrap from 'bootstrap';
-import { Employee } from 'src/interface/empl.interface';
-import { Person } from 'src/interface/person.interface';
 import { AppService } from './services/app.service';
 export var myModal: any;
 @Component({
@@ -30,7 +28,6 @@ export class AppComponent implements OnInit {
     })
   }
   mapping(resp: any[]) {
-    let temp: any[] = [];
     for (let p of resp) {
       this.Persons.push({
         id: p.id,
@@ -67,10 +64,8 @@ export class AppComponent implements OnInit {
     });
     this.packItems(person);
     myModal.show();
-    // this.modalDetails = { ...person };
   }
   packItems(person: any) {
-    console.log(person)
     let splitAddr = person.address.split(',');
     this.modalDetails = {
       id: person.id,
