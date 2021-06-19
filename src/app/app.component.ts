@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
         address: (p.address.street + ',' + p.address.suite + ',' + p.address.city + ',' + p.address.zipcode),
         company: p.company.name,
         companyCatchPhrase: p.company.catchPhrase,
-        companyBs: p.company.bs ,
+        companyBs: p.company.bs,
         website: p.website,
         email: p.email,
         phone: p.phone
@@ -53,7 +53,11 @@ export class AppComponent implements OnInit {
     }
   }
   add() {
-
+    let id = <HTMLInputElement>document.getElementById('informationModal');
+    myModal = new bootstrap.Modal(id, {
+      keyboard: false
+    });
+    myModal.show();
   }
   edit(person: any) {
     let id = <HTMLInputElement>document.getElementById('informationModal');
@@ -93,24 +97,44 @@ export class AppComponent implements OnInit {
     }
   }
   submit() {
-    for (let p of this.Persons) {
-      if (p.id === this.modalDetails.id) {
-        console.log(p)
-        p = ({
-          id: this.modalDetails.id,
-          name: this.modalDetails.name,
-          address: (this.modalDetails.street + ',' + this.modalDetails.suite + ',' + this.modalDetails.city + ',' + this.modalDetails.zipcode),
-          company: { 
+    if (this.modalDetails.id) {
+      for (let p of this.Persons) {
+        if (p.id === this.modalDetails.id) {
+          console.log(p)
+          p = ({
+            id: this.modalDetails.id,
+            name: this.modalDetails.name,
+            address: (this.modalDetails.street + ',' + this.modalDetails.suite + ',' + this.modalDetails.city + ',' + this.modalDetails.zipcode),
+            company: {
+              name: this.modalDetails.companyName,
+              catchPhrase: this.modalDetails.companyCatchPhrase,
+              bs: this.modalDetails.companyBs
+            },
+            website: this.modalDetails.website,
+            email: this.modalDetails.email,
+            phone: this.modalDetails.phone
+          });
+          myModal.hide();
+          break;
+        }
+      }
+    } else {
+      /// new record
+      this.Persons.push({
+        id: this.Persons.length + 1,
+        name: this.modalDetails.name,
+        address: (this.modalDetails.street + ',' + this.modalDetails.suite + ',' + this.modalDetails.city + ',' + this.modalDetails.zipcode),
+        company: {
           name: this.modalDetails.companyName,
           catchPhrase: this.modalDetails.companyCatchPhrase,
-          bs: this.modalDetails.companyBs },
-          website: this.modalDetails.website,
-          email: this.modalDetails.email,
-          phone: this.modalDetails.phone
-        });
-        myModal.hide();
-        break;
-      }
+          bs: this.modalDetails.companyBs
+        },
+        website: this.modalDetails.website,
+        email: this.modalDetails.email,
+        phone: this.modalDetails.phone
+      });
+      myModal.hide();
+      alert('details added successfully')
     }
   }
 
