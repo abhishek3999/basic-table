@@ -1,0 +1,200 @@
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Welcome to My Project</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+      </ul>
+      <span class="navbar-text">
+        Navbar text with an inline element
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- show the details in tabular format -->
+<div class="container mt-5">
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button class="btn btn-primary me-md-2"  (click)="add()" type="button">Add</button>
+  </div>
+  <div class="text-center">
+    <h4>Employee List</h4>
+  </div>
+  <table class="table table-striped">
+   
+    <thead>
+      <tr>
+        <td>
+          <input list="names" class="form-control" [(ngModel)]="empSearchList.nameSearch" placeholder="name" aria-label="name">
+          <datalist id="names" name="names">
+            <option *ngFor="let s of searchDataList" [value]="s.name"></option>
+          </datalist>
+        </td>
+        <td>
+          <input type="text" list="addresses" class="form-control" [(ngModel)]="empSearchList.addressSearch" placeholder="address"
+            aria-label="addressSearch">
+          <datalist id="addresses" name="addresses">
+            <option *ngFor="let s of searchDataList" [value]="s.address"></option>
+          </datalist>
+        </td>
+        <td>
+          <input type="text" list="companies" class="form-control" [(ngModel)]="empSearchList.companySearch" placeholder="company"
+            aria-label="companySearch">
+          <datalist id="companies" name="companies">
+            <option *ngFor="let s of searchDataList" [value]="s.company"></option>
+          </datalist>
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Company</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let person of Persons | category: empSearchList.nameSearch: empSearchList.addressSearch: empSearchList.companySearch">
+        <tr *ngIf="person.restore !== 1">
+          <td>{{person.name}}</td>
+          <td>{{person.address}}</td>
+          <td>{{person.company.name}}</td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="edit(person)">Edit</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-danger" (click)="delet(person)">Delete</button>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+  <!-- show deleted items -->
+  <div class="text-center">
+    <h4>Deleted Employee List</h4>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <td>
+          <input list="names" class="form-control" [(ngModel)]="deleteSearchList.name" placeholder="name" aria-label="name">
+          <datalist id="names" name="names">
+            <option *ngFor="let dl of deleteDataList" [value]="dl.name"></option>
+          </datalist>
+        </td>
+        <td>
+          <input type="text" list="addresses" class="form-control" [(ngModel)]="deleteSearchList.address" placeholder="address"
+            aria-label="addressSearch">
+          <datalist id="addresses" name="addresses">
+            <option *ngFor="let dl of deleteDataList" [value]="dl.address"></option>
+          </datalist>
+        </td>
+        <td>
+          <input type="text" list="companies" class="form-control" [(ngModel)]="deleteSearchList.company" placeholder="company"
+            aria-label="companySearch">
+          <datalist id="companies" name="companies">
+            <option *ngFor="let dl of deleteDataList" [value]="dl.company"></option>
+          </datalist>
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Company</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let removedItem of Persons | category: deleteSearchList.name: deleteSearchList.address: deleteSearchList.company">
+        <tr *ngIf="removedItem.restore === 1">
+          <td>{{removedItem.name}}</td>
+          <td>{{removedItem.address}}</td>
+          <td>{{removedItem.company.name}}</td>
+          <td>
+            <button type="button" class="btn btn-secondary" (click)="removedItem.restore = 0">Restore</button>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+  <!-- modal popup showcase  -->
+  <div class="modal fade" id="informationModal" tabindex="-1" aria-labelledby="informationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="informationModalLabel">Employee Form</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form #emplForm="ngForm">
+            <div class="mb-3">
+              <label for="name" class="col-form-label">Name:</label>
+              <input type="text" class="form-control" [(ngModel)]="modalDetails.name" id="name" required name="name">
+            </div>
+            <div class="mb-3">
+              <label for="email" class="col-form-label">Email:</label>
+              <input type="text" class="form-control" [(ngModel)]="modalDetails.email" id="email" required name="email">
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="col-form-label">Phone:</label>
+              <!-- <textarea class="form-control" [(ngModel)]="modalDetails.phone" id="phone" required name="phone"></textarea> -->
+              <input type="text" class="form-control" [(ngModel)]="modalDetails.phone" id="phone" required name="phone">
+            </div>
+            <div class="mb-3">
+              <label for="website" class="col-form-label">Website:</label>
+              <input type="text" class="form-control" [(ngModel)]="modalDetails.website" id="website" required name="website">
+            </div>
+         <hr/>
+         <h6>Company Details: </h6>
+            <div class="mb-3">
+              <label for="cname" class="col-form-label">Name:</label>
+              <input type="text" class="form-control" [(ngModel)]="modalDetails.companyName" id="cname" required name="cname">
+            </div>
+            <div class="mb-3">
+              <label for="catchPhrase" class="col-form-label">CatchPhrase:</label>
+              <input type="text" class="form-control" [(ngModel)]="modalDetails.companyCatchPhrase" id="catchPhrase" required name="catchPhrase">
+            </div>
+            <div class="mb-3">
+              <label for="bs" class="col-form-label">BS:</label>
+              <input type="text" class="form-control" [(ngModel)]="modalDetails.companyBs" id="bs" required name="catchPhrase">
+            </div>
+            <hr/>
+            <h6>Address Details: </h6>
+            <div class="mb-3">
+              <label for="street" class="col-form-label">Street:</label>
+              <input type="text" class="form-control" [(ngModel)]="modalDetails.street" id="street" required name="street">
+            </div>
+            <div class="mb-3">
+              <label for="suite" class="col-form-label">Suite:</label>
+              <input type="text" class="form-control" [(ngModel)]="modalDetails.suite" id="suite" required name="suite">
+            </div>
+            <div class="mb-3">
+              <label for="city" class="col-form-label">City:</label>
+              <input type="text" class="form-control" [(ngModel)]="modalDetails.city" id="city" required name="city">
+            </div>
+            <div class="mb-3">
+              <label for="zipcode" class="col-form-label">Zipcode:</label>
+              <input type="text" class="form-control" [(ngModel)]="modalDetails.zipcode" id="zipcode" required name="zipcode">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" [disabled]="!emplForm.form.valid" (click)="submit()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
