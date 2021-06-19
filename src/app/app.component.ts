@@ -105,11 +105,9 @@ export class AppComponent implements OnInit {
             id: this.modalDetails.id,
             name: this.modalDetails.name,
             address: (this.modalDetails.street + ',' + this.modalDetails.suite + ',' + this.modalDetails.city + ',' + this.modalDetails.zipcode),
-            company: {
-              name: this.modalDetails.companyName,
-              catchPhrase: this.modalDetails.companyCatchPhrase,
-              bs: this.modalDetails.companyBs
-            },
+            companyName: this.modalDetails.companyName,
+            companyCatchPhrase: this.modalDetails.companyCatchPhrase,
+            companyBs: this.modalDetails.companyBs,
             website: this.modalDetails.website,
             email: this.modalDetails.email,
             phone: this.modalDetails.phone
@@ -124,11 +122,9 @@ export class AppComponent implements OnInit {
         id: this.Persons.length + 1,
         name: this.modalDetails.name,
         address: (this.modalDetails.street + ',' + this.modalDetails.suite + ',' + this.modalDetails.city + ',' + this.modalDetails.zipcode),
-        company: {
-          name: this.modalDetails.companyName,
-          catchPhrase: this.modalDetails.companyCatchPhrase,
-          bs: this.modalDetails.companyBs
-        },
+        companyName: this.modalDetails.companyName,
+        companyCatchPhrase: this.modalDetails.companyCatchPhrase,
+        companyBs: this.modalDetails.companyBs,
         website: this.modalDetails.website,
         email: this.modalDetails.email,
         phone: this.modalDetails.phone
