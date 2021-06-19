@@ -53,7 +53,7 @@
           <input type="text" list="companies" class="form-control" [(ngModel)]="empSearchList.companySearch" placeholder="company"
             aria-label="companySearch">
           <datalist id="companies" name="companies">
-            <option *ngFor="let s of searchDataList" [value]="s.company"></option>
+            <option *ngFor="let s of searchDataList" [value]="s.company"></option> 
           </datalist>
         </td>
         <td>&nbsp;</td>
@@ -70,7 +70,7 @@
         <tr *ngIf="person.restore !== 1">
           <td>{{person.name}}</td>
           <td>{{person.address}}</td>
-          <td>{{person.company.name}}</td>
+          <td>{{person.company}}</td>
           <td>
             <button type="button" class="btn btn-primary" (click)="edit(person)">Edit</button>&nbsp;&nbsp;
             <button type="button" class="btn btn-danger" (click)="delet(person)">Delete</button>
@@ -120,7 +120,7 @@
         <tr *ngIf="removedItem.restore === 1">
           <td>{{removedItem.name}}</td>
           <td>{{removedItem.address}}</td>
-          <td>{{removedItem.company.name}}</td>
+          <td>{{removedItem.company}}</td>
           <td>
             <button type="button" class="btn btn-secondary" (click)="removedItem.restore = 0">Restore</button>
           </td>

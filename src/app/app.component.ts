@@ -36,15 +36,20 @@ export class AppComponent implements OnInit {
         id: p.id,
         name: p.name,
         address: (p.address.street + ',' + p.address.suite + ',' + p.address.city + ',' + p.address.zipcode),
-        company: { 
-        name: p.company.name,
-        catchPhrase: p.company.catchPhrase,
-        bs: p.company.bs },
+        company: p.company.name,
+        companyCatchPhrase: p.company.catchPhrase,
+        companyBs: p.company.bs ,
         website: p.website,
         email: p.email,
         phone: p.phone
       });
       this.searchDataList = [...this.Persons];
+      this.searchDataList.push({
+        name: p.name,
+        address: (p.address.street + ',' + p.address.suite + ',' + p.address.city + ',' + p.address.zipcode),
+        company: p.company.name,
+      });
+      console.log(this.searchDataList);
     }
   }
   add() {
@@ -70,9 +75,9 @@ export class AppComponent implements OnInit {
       suite: splitAddr[1] || '',
       city: splitAddr[2] || '',
       zipcode: splitAddr[3] || '',
-      companyName: person.company.name,
-      companyCatchPhrase: person.company.catchPhrase,
-      companyBs: person.company.bs,
+      companyName: person.company,
+      companyCatchPhrase: person.companyCatchPhrase,
+      companyBs: person.companyBs,
       website: person.website,
       phone: person.phone
     }
