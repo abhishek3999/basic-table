@@ -58,6 +58,7 @@ export class AppComponent implements OnInit {
       keyboard: false
     });
     myModal.show();
+    this.modalDetails = {};
   }
   edit(person: any) {
     let id = <HTMLInputElement>document.getElementById('informationModal');
@@ -122,7 +123,7 @@ export class AppComponent implements OnInit {
         id: this.Persons.length + 1,
         name: this.modalDetails.name,
         address: (this.modalDetails.street + ',' + this.modalDetails.suite + ',' + this.modalDetails.city + ',' + this.modalDetails.zipcode),
-        companyName: this.modalDetails.companyName,
+        company: this.modalDetails.companyName,
         companyCatchPhrase: this.modalDetails.companyCatchPhrase,
         companyBs: this.modalDetails.companyBs,
         website: this.modalDetails.website,
